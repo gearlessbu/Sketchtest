@@ -3,8 +3,10 @@ const ctx = canvas.getContext('2d');
 let drawing = false;
 
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const dpr = window.devicePixelRatio || 1; // 获取设备像素比
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    ctx.scale(dpr, dpr); // 缩放上下文以匹配设备像素比
 }
 
 window.addEventListener('resize', resizeCanvas);
@@ -38,10 +40,14 @@ function draw(e) {
 
 function getPosition(e) {
     const rect = canvas.getBoundingClientRect();
-    const x = e.touches ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
-    const y = e.touches ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
+    const scaleX = canvas.width / rect.width;    // 考虑横向缩放
+    const scaleY = canvas.height / rect.height;  // 考虑纵向缩放
+ 
+    const x = e.touches ? (e.touches[0].clientX - rect.left) * scaleX : (e.clientX - rect.left) * scaleX;
+    const y = e.touches ? (e.touches[0].clientY - rect.top) * scaleY : (e.clientY - rect.top) * scaleY;
+ 
     return { offsetX: x, offsetY: y };
-}
+} 
 
 // 保存图像的功能
 document.getElementById('saveButton').addEventListener('click', () => {
