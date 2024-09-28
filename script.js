@@ -50,3 +50,8 @@ document.getElementById('saveButton').addEventListener('click', () => {
     link.href = canvas.toDataURL('image/png'); // 获取画布内容为图片
     link.click(); // 自动点击链接进行下载
 });
+
+// 清空画布的功能
+document.getElementById('clearButton').addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // 清空整个画布
+});
