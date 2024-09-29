@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>线稿绘制</title>
+    <title>Sketcher</title>
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -15,11 +17,13 @@
             align-items: center;
             position: relative;
         }
+
         canvas {
             border: 1px solid #000;
             width: 100vw;
             height: 100vh;
         }
+
         .button {
             position: absolute;
             top: 10px;
@@ -27,20 +31,26 @@
             font-size: 16px;
             z-index: 10;
         }
+
         #saveButton {
             left: 50%;
             transform: translateX(-50%);
         }
+
         #clearButton {
             left: 80%;
             transform: translateX(-50%);
         }
     </style>
 </head>
+
 <body>
     <canvas id="drawingCanvas"></canvas>
-    <button id="saveButton" class="button">保存图像</button>
-    <button id="clearButton" class="button">清空画布</button>
-    <script src="script.js"></script>
+    <button id="saveButton" class="button">Save & Run</button>
+    <button id="clearButton" class="button">Clear Canvas</button>
+
+    <!-- 引用外部的 JavaScript 文件 -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
+
 </html>
