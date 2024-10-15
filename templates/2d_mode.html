@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>线稿绘制 - 2D模式</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative; /* 使得按钮可以绝对定位 */
+        }
+
+        #modeButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007AFF; /* iOS 风格蓝色 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        canvas {
+            border: 1px solid #000;
+            width: 1000px;
+            height: 600px;
+        }
+
+        #controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        #resizeForm input {
+            width: 50px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <button id="modeButton">切换到 3D 模式</button>
+    
+    <div id="container">
+        <div id="controls">
+            <form id="resizeForm">
+                宽度: <input type="number" id="canvasWidth" value="1000">
+                高度: <input type="number" id="canvasHeight" value="600">
+                <button type="button" id="resizeButton" class="button">调整大小</button>
+            </form>
+            <button id="saveButton" class="button">保存图像</button>
+            <button id="clearButton" class="button">清空画布</button>
+        </div>
+
+        <canvas id="drawingCanvas"></canvas>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    
+    <script>
+        // 切换模式的事件处理
+        document.getElementById('modeButton').addEventListener('click', () => {
+            // 跳转到 3D 模式网页
+            window.location.href = '/3d_mode'; // 你可以根据需要修改这个 URL
+        });
+    </script>
+</body>
+</html>

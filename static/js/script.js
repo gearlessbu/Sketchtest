@@ -2,15 +2,14 @@ const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
 let drawing = false;
 
-function resizeCanvas() {
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    ctx.scale(dpr, dpr);
+function resizeCanvas(width, height) {
+    // 调整画布的宽高属性和 CSS 样式
+    canvas.width = width;
+    canvas.height = height;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    ctx.clearRect(0, 0, width, height);  // 清除画布
 }
-
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
 
 canvas.addEventListener('mousedown', startDrawing);
 canvas.addEventListener('mouseup', stopDrawing);
@@ -40,12 +39,13 @@ function draw(e) {
     ctx.stroke();
 }
 
+// 考虑 canvas 缩放，获取相对位置
 function getPosition(e) {
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-
     let x, y;
+    const scaleX = canvas.width / rect.width;  // 水平方向的缩放比例
+    const scaleY = canvas.height / rect.height;  // 垂直方向的缩放比例
+
     if (e.touches) {
         x = (e.touches[0].clientX - rect.left) * scaleX;
         y = (e.touches[0].clientY - rect.top) * scaleY;
@@ -66,16 +66,23 @@ document.getElementById('saveButton').addEventListener('click', () => {
         },
         body: JSON.stringify({ image_data: imageData }),
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.message);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 });
 
 // 清空画布
 document.getElementById('clearButton').addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+// 调整画布大小
+document.getElementById('resizeButton').addEventListener('click', () => {
+    const width = parseInt(document.getElementById('canvasWidth').value);
+    const height = parseInt(document.getElementById('canvasHeight').value);
+    resizeCanvas(width, height);
 });

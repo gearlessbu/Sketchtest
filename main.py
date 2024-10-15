@@ -6,10 +6,19 @@ import os
 
 app = Flask(__name__)
 
-# 显示画布页面
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html')  # 仍然使用 index.html
+
+@app.route('/2d_mode')
+def two_d_mode():
+    return render_template('2d_mode.html')  # 新的 2D 模式路由
+
+@app.route('/3d_mode')
+def three_d_mode():
+    return render_template('3d_mode.html')  # 3D 模式路由
+
+
 
 # 处理图像数据并触发后端 Python 任务
 @app.route('/process_image', methods=['POST'])
@@ -35,4 +44,6 @@ def run_python_task(image_path):
     return "任务完成"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+    # 现在这个在Tsinghua-IIIS这种公用网络上不太行，好像和防火墙有关，连手机热点可以在手机上访问
+    # app.run(debug=True)
